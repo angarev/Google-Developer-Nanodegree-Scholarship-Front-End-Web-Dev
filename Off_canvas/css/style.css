@@ -1,0 +1,62 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html, body, main {
+	height: 100%;
+	width: 100%;
+}
+
+.light_blue {
+	background: blue;
+}
+
+.dark_blue {
+	background: darkblue;
+}
+
+nav {
+	width: 300px;
+	height: 100%;
+	position: absolute;
+	transform: translate(-300px, 0);
+	transition: transform 0.3s ease;
+}
+
+nav.open {
+	transform: translate(0, 0);
+}
+
+a#menu i {
+	font-size: 40px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+a#menu.open {
+	position: absolute;
+	color: #fff;
+}
+
+@media screen and (min-width: 600px) {
+	nav {
+		position: relative;
+		transform: translate(0, 0);
+	}
+
+	body {
+		display: flex;
+		flex-flow: row nowrap;
+	}
+
+	main {
+		width: auto;
+		flex-grow: 1;
+	}
+
+	a#menu {
+		display: none;
+	}
+}
