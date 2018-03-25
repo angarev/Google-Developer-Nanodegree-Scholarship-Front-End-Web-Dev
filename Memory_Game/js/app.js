@@ -21,26 +21,20 @@ const cards = [
 ];
 
 
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 const listItems = Array.from(document.querySelectorAll('ul.deck>li.card'));
-const shuffleCards = shuffle(cards);
-const refreshButton = document.getElementsByClassName('restart');
+const refreshButton = document.querySelector('.restart');
+const shuffleCardsBegin = shuffle(cards);
 
-listItems.forEach(function(listItem, index) {
-    let item = document.createElement("i");
-    item.className = shuffleCards[index];
-    listItem.appendChild(item);
-});
+// Display function that creates a new <i> element and adds a class to it
+function displayCards(array) {
+    listItems.forEach((listItem, index) => {
+        let item = document.createElement("i");
+        item.className = array[index];
+        listItem.appendChild(item);
+    });
+}
 
-
-
+displayCards(shuffleCardsBegin);
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -70,3 +64,15 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+refreshButton.addEventListener('click', function() {
+    listItems.forEach(function(item, index) {
+        const i = item.getElementsByTagName('i');
+        item.removeChild(i.item(0));
+    });
+})
+
+refreshButton.addEventListener('click', function() {
+    const shuffleCardsClick = shuffle(cards);
+    displayCards(shuffleCardsClick);
+})
