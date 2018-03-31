@@ -22,16 +22,33 @@ const cards = [
 
 
 const refreshButton = document.querySelector('.restart');
+
 const deck = document.querySelector('.deck');
+
+const time = document.getElementById('timer');
+
+let seconds, minutes, hours;
+
 
 let openCardsId = [];
 let openCardsValue = [];
-let flipedCards = [];
+let flipedCards = 0;
 
 // Display function that creates a new <i> element and adds a class to it
 function displayCards() {
 
+    flipedCards = 0;
+    time.textContent = "00:00:00";
+
+    timer();
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
+
     const shuffleCardsBegin = shuffle(cards);
+
+
+
     for (let i = 0; i < shuffleCardsBegin.length; i++) {
         const liTag = document.createElement("li");
         const iTag = document.createElement("i");
@@ -63,8 +80,12 @@ function displayCards() {
 function match() {
     document.getElementById(openCardsId[0]).className = 'card match';
     document.getElementById(openCardsId[1]).className = 'card match';
+    flipedCards += 2;
     openCardsValue = [];
     openCardsId = [];
+    if (flipedCards === cards.length) {
+        alertMsg();
+    }
 }
 
 
@@ -75,46 +96,48 @@ function unmatch() {
 
 
 function delay() {
+    const list = Array.from(document.querySelectorAll('ul.deck>li'));
+    list.forEach(function(item) {
+        item.classList.add("click-block");
+    })
     setTimeout(function() {
         document.getElementById(openCardsId[0]).className = 'card flip';
         document.getElementById(openCardsId[1]).className = 'card flip';
+        list.forEach(function(element) {
+            element.classList.remove("click-block");
+            element.classList.remove("flip");
+        });
         openCardsValue = [];
         openCardsId = [];
+    }, 900);
+}
+
+function alertMsg() {
+    setTimeout(function() {
+        alert("This is the END!")
     }, 900);
 }
 
 displayCards();
 
 
-
-
-const time = document.getElementById('timer');
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
-let t = 0;
-
-function addTime() {
-    seconds++;
-    if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-        if (minutes >= 60) {
-            minutes = 0;
-            hours++;
-        }
-    }
-
-    time.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-
-    timer();
-}
-
 function timer() {
-    setTimeout(addTime, 1000);
+    setInterval(function() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+        time.textContent =
+            (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" +
+            (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" +
+            (seconds ? (seconds > 9 ? seconds : "0" + seconds) : "00");
+    }, 1000)
 }
-timer();
-
 
 
 

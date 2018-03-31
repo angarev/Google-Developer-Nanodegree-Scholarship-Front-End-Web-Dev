@@ -198,3 +198,7 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.score-panel #timer {
+    padding: 0 60px;
+}
