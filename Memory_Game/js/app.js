@@ -2,39 +2,93 @@
  * Create a list that holds all of your cards
  */
 const cards = [
-    "fa fa-diamond",
-    "fa fa-paper-plane-o",
-    "fa fa-anchor",
-    "fa fa-bolt",
-    "fa fa-cube",
-    "fa fa-anchor",
-    "fa fa-leaf",
-    "fa fa-bicycle",
-    "fa fa-diamond",
-    "fa fa-bomb",
-    "fa fa-leaf",
-    "fa fa-bomb",
-    "fa fa-bolt",
-    "fa fa-bicycle",
-    "fa fa-paper-plane-o",
-    "fa fa-cube"
+    "diamond",
+    "paper-plane-o",
+    "anchor",
+    "bolt",
+    "cube",
+    "anchor",
+    "leaf",
+    "bicycle",
+    "diamond",
+    "bomb",
+    "leaf",
+    "bomb",
+    "bolt",
+    "bicycle",
+    "paper-plane-o",
+    "cube"
 ];
 
 
-const listItems = Array.from(document.querySelectorAll('ul.deck>li.card'));
 const refreshButton = document.querySelector('.restart');
-const shuffleCardsBegin = shuffle(cards);
+const deck = document.querySelector('.deck');
+let openCardsId = [];
+
+let openCardsValue = [];
+
+let flipedCards = [];
 
 // Display function that creates a new <i> element and adds a class to it
-function displayCards(array) {
-    listItems.forEach((listItem, index) => {
-        let item = document.createElement("i");
-        item.className = array[index];
-        listItem.appendChild(item);
-    });
+function displayCards() {
+
+    const shuffleCardsBegin = shuffle(cards);
+    for (let i = 0; i < shuffleCardsBegin.length; i++) {
+        const liTag = document.createElement("li");
+        const iTag = document.createElement("i");
+        liTag.className = "card";
+        iTag.className = 'fa fa-' + shuffleCardsBegin[i];
+        liTag.id = i;
+
+        liTag.addEventListener('click', function() {
+            let id = this.id;
+            this.className += ' open show';
+            openCardsId.push(id);
+            const value = document.getElementById(id).children[0].getAttribute('class');
+            openCardsValue.push(value);
+            if (openCardsId.length == 2) {
+                if (openCardsValue[0] == openCardsValue[1]) {
+                    match();
+                } else {
+                    unmatch();
+                    delay();
+
+                }
+            }
+        });
+        liTag.appendChild(iTag);
+        deck.appendChild(liTag);
+    }
 }
 
-displayCards(shuffleCardsBegin);
+
+function match() {
+    document.getElementById(openCardsId[0]).className = 'card match';
+    document.getElementById(openCardsId[1]).className = 'card match';
+    openCardsValue = [];
+    openCardsId = [];
+}
+
+
+function unmatch() {
+    document.getElementById(openCardsId[0]).className = 'card unmatch';
+    document.getElementById(openCardsId[1]).className = 'card unmatch';
+    const liArray = Array.from(document.querySelectorAll('ul.deck>li'));
+    console.log(liArray);
+
+}
+
+
+function delay() {
+    setTimeout(function() {
+        document.getElementById(openCardsId[0]).className = 'card';
+        document.getElementById(openCardsId[1]).className = 'card';
+        openCardsValue = [];
+        openCardsId = [];
+    }, 600);
+}
+
+displayCards();
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -65,14 +119,60 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-refreshButton.addEventListener('click', function() {
-    listItems.forEach(function(item, index) {
-        const i = item.getElementsByTagName('i');
-        item.removeChild(i.item(0));
-    });
-})
 
 refreshButton.addEventListener('click', function() {
-    const shuffleCardsClick = shuffle(cards);
-    displayCards(shuffleCardsClick);
+    deck.innerHTML = "";
+    openCardsValue = [];
+    openCardsId = [];
+    displayCards();
 })
+
+
+// function addEvent(item) {
+//     item.addEventListener('click', function (event) {
+//         console.log(event.target.id);
+//         addOpenCard(item);
+//     })
+// }
+
+
+// function addOpenCard(item) {
+//     item.className += " open show";
+//     const i = item.getElementsByTagName('i')[0].getAttribute('class');
+//     openCards.push(i);
+//     matchCards(openCards);
+// }
+
+
+function matchCards(arrayOpenCards) {
+
+    if (arrayOpenCards.length === 2) {
+        if (arrayOpenCards[0] === arrayOpenCards[1]) {
+
+
+            // arrayOpenCards.forEach(function (item) {
+            //     item.className = "card match";
+            // })
+        } else {
+            arrayOpenCards.forEach(function(item) {
+                //let target = document.getElementsByClassName(item);
+
+                //var x = document.querySelector("fa").parentNode.nodeName;
+
+                // target.item(0).parentElement.className = "card";
+                // target.item(1).parentElement.className = "card";
+            });
+
+            //
+            // arrayOpenCards = [];
+            console.log(arrayOpenCards);
+
+        }
+    } else {
+        //console.log(arrayOpenCards);
+    }
+
+    //    console.log(arrayOpenCards);
+
+
+}
