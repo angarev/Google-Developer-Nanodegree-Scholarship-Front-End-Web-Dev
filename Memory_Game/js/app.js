@@ -76,8 +76,8 @@ function unmatch() {
 
 function delay() {
     setTimeout(function() {
-        document.getElementById(openCardsId[0]).className = 'card';
-        document.getElementById(openCardsId[1]).className = 'card';
+        document.getElementById(openCardsId[0]).className = 'card flip';
+        document.getElementById(openCardsId[1]).className = 'card flip';
         openCardsValue = [];
         openCardsId = [];
     }, 900);
@@ -153,53 +153,3 @@ refreshButton.addEventListener('click', function() {
     openCardsId = [];
     displayCards();
 })
-
-
-// function addEvent(item) {
-//     item.addEventListener('click', function (event) {
-//         console.log(event.target.id);
-//         addOpenCard(item);
-//     })
-// }
-
-
-// function addOpenCard(item) {
-//     item.className += " open show";
-//     const i = item.getElementsByTagName('i')[0].getAttribute('class');
-//     openCards.push(i);
-//     matchCards(openCards);
-// }
-
-
-function matchCards(arrayOpenCards) {
-
-    if (arrayOpenCards.length === 2) {
-        if (arrayOpenCards[0] === arrayOpenCards[1]) {
-
-
-            // arrayOpenCards.forEach(function (item) {
-            //     item.className = "card match";
-            // })
-        } else {
-            arrayOpenCards.forEach(function(item) {
-                //let target = document.getElementsByClassName(item);
-
-                //var x = document.querySelector("fa").parentNode.nodeName;
-
-                // target.item(0).parentElement.className = "card";
-                // target.item(1).parentElement.className = "card";
-            });
-
-            //
-            // arrayOpenCards = [];
-            console.log(arrayOpenCards);
-
-        }
-    } else {
-        //console.log(arrayOpenCards);
-    }
-
-    //    console.log(arrayOpenCards);
-
-
-}
