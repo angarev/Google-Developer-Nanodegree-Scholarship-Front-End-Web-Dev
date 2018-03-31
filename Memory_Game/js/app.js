@@ -23,10 +23,9 @@ const cards = [
 
 const refreshButton = document.querySelector('.restart');
 const deck = document.querySelector('.deck');
+
 let openCardsId = [];
-
 let openCardsValue = [];
-
 let flipedCards = [];
 
 // Display function that creates a new <i> element and adds a class to it
@@ -52,7 +51,6 @@ function displayCards() {
                 } else {
                     unmatch();
                     delay();
-
                 }
             }
         });
@@ -73,9 +71,6 @@ function match() {
 function unmatch() {
     document.getElementById(openCardsId[0]).className = 'card unmatch';
     document.getElementById(openCardsId[1]).className = 'card unmatch';
-    const liArray = Array.from(document.querySelectorAll('ul.deck>li'));
-    console.log(liArray);
-
 }
 
 
@@ -85,10 +80,42 @@ function delay() {
         document.getElementById(openCardsId[1]).className = 'card';
         openCardsValue = [];
         openCardsId = [];
-    }, 600);
+    }, 900);
 }
 
 displayCards();
+
+
+
+
+const time = document.getElementById('timer');
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let t = 0;
+
+function addTime() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+
+    time.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    timer();
+}
+
+function timer() {
+    setTimeout(addTime, 1000);
+}
+timer();
+
+
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
