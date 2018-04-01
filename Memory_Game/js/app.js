@@ -65,6 +65,8 @@ let score = document.getElementsByClassName('stars');
 //Get the element that restart the game through modal window
 let restart = document.getElementById('start');
 
+//The value from which the clicks will start
+let click = 0;
 
 /**
  * @description Loads the game when the browser opens
@@ -89,10 +91,9 @@ function init() {
     seconds = 0;
     minutes = 0;
     hours = 0;
+    click = 0;
+    time.innerHTML = "00:00:00";
     clearInterval(timeInterval);
-
-    //Init timer
-    timer();
 
     //Shuffle cards
     const shuffleCardsBegin = shuffle(cards);
@@ -111,7 +112,6 @@ function init() {
         liTag.appendChild(iTag);
         deck.appendChild(liTag);
     }
-
 }
 
 /**
@@ -145,6 +145,13 @@ function addClickEvent(item) {
         openCardsId.push(id);
         const value = document.getElementById(id).children[0].getAttribute('class');
         openCardsValue.push(value);
+
+        click++;
+        if (click == 1) {
+            //Init timer
+            timer();
+        }
+
         if (openCardsId.length == 2) {
             //Start movesCounter
             moviesCounter();
@@ -160,6 +167,8 @@ function addClickEvent(item) {
         }
     });
 }
+
+
 
 /**
  * @description If cards matched the function add a new class to the matched elements, 
